@@ -147,17 +147,23 @@ public class BookService {
 		if(list.isEmpty()) {
 			System.out.println("도서 목록이 비어있습니다.");
 		} else {
+			for(Map<String, Object> re : list) {
+				if(re.containsValue(name)) {
+					
+					int num = list.size() - 1;
+					list.remove(num);
+					
+					
+					
+					// for문 역순으로 변경하기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+				}
+				
+			}
+
+			
 			
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
 	}
 	
 	
