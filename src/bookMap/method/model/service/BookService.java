@@ -1,6 +1,9 @@
 package bookMap.method.model.service;
 
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,6 +13,7 @@ public class BookService {
 
 	Scanner sc = new Scanner(System.in);
 	List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
+	List<Map<String, Object>> favorites = new ArrayList<Map<String,Object>>();
 	static int count = 0;
 	
 	public void display() {
@@ -106,12 +110,11 @@ public class BookService {
 		if(list.isEmpty()) {
 			System.out.println("도서 목록이 비어있습니다.");
 		} else {
-			
-			for(Map<String, Object> select : list) {
-				if(select.containsValue(name)) {
-					
-					int num = list.size() - 1;
+			for(int i = 0; i < list.size(); i++) {
+				if(name.equals(list.get(i).get("keyTitle"))) {
 
+					System.out.println("도서 목록 수정을 시작합니다!");
+					
 					System.out.print("도서 제목 : ");
 					String title = sc.next();
 					System.out.print("작가 : ");
@@ -127,13 +130,15 @@ public class BookService {
 					map.put("keyPrice", price);
 					map.put("keyPublisher", publisher);
 					
-					list.set(num, map);
-					System.out.println("도서 목록 수정이 완료 되었습니다!");
-
+					Map<String, Object> temp = list.set(i, map);
+					System.out.println(temp.get("keyTitle") + "의 도서 내용이 수정되었습니다.");
+					
 				}
+					
 			}
 		}
 	}
+	
 	
 	
 	public void removeBook() {
@@ -147,38 +152,44 @@ public class BookService {
 		if(list.isEmpty()) {
 			System.out.println("도서 목록이 비어있습니다.");
 		} else {
-			for(Map<String, Object> re : list) {
-				if(re.containsValue(name)) {
-					
-					int num = list.size() - 1;
-					list.remove(num);
-					
-					
-					
-					// for문 역순으로 변경하기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			for(int i = 0; i < list.size(); i++) {
+				if(list.get(i).get("keyTitle").equals(name)) {
+					Map<String, Object> re = list.remove(i);
+					System.out.println(re.get("keyTitle") + "의 도서 내용이 삭제되었습니다.\n");
 				}
-				
 			}
-
-			
-			
 		}
-
 	}
 	
 	
-	public void addFavorites() {}
+	public void addFavorites() {
+		
+	}
 	
 	
 	public void removeFavorites() {
 		
-		
-		
-		
-		
 	}
 	
 	
-	
-	
+	public void fileWriter() {
+		FileWriter fw = null;
+		
+		try {
+			fw = new FileWriter("text.txt");
+			
+			fw.write(favorites.toString());
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			
+			try {
+				fw.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
